@@ -43,12 +43,29 @@ clock = pygame.time.Clock()
 
 
 # Тут опишите все классы игры.
-...
 
 
 def main():
     # Тут нужно создать экземпляры классов.
-    ...
+    class GameObject():
+
+        def __init__(self, position, body_color):
+            self.position = position
+            self.body_color = body_color
+    
+        def draw(self):
+            pass
+
+    class Snake(GameObject):
+
+        def __init__(self, position, positions, body_color, direction):
+            self.direction = direction
+            self.positions = positions
+            super().__init__(position, body_color)
+
+        def draw(self):
+            first, second = self.direction
+            self.positions[-1] = [self.positions[-1][0] + first, self.positions[-1][1] + second]
 
     # while True:
     #     clock.tick(SPEED)
