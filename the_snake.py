@@ -55,17 +55,20 @@ class GameObject():
 class Apple(GameObject):
     """Дочерний класс объекта яблоко"""
 
-    def __init__(self, snake):
+    def __init__(self):
         """Инициализация атрибутов яблока, постановка яблока в рандомном месте
         на игровом поле
         """
-        self.snake = snake
         GameObject.__init__(self, body_color=APPLE_COLOR)
         self.randomize_position()
 
     def randomize_position(self):
         """Функция для определения яблока в рандомном месте на игровом поле"""
-        while self.position in self.snake.positions:
+        self.position = [
+            randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        ]
+        while self.position in Snake().positions:
             self.position = [
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE
@@ -153,7 +156,7 @@ def handle_keys(game_object):
 def main():
     """Функция запуска основного цикла игры"""
     snake = Snake()
-    apple = Apple(snake)
+    apple = Apple()
     while True:
         clock.tick(SPEED)
         apple.draw()
