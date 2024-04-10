@@ -64,7 +64,7 @@ class Apple(GameObject):
 
     def randomize_position(self, occupied):
         """Функция для определения яблока в рандомном месте на игровом поле"""
-        occupied = [[0, 0]] if occupied is None else occupied
+        occupied = [] if occupied is None else occupied
         self.position = [
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE
@@ -103,8 +103,8 @@ class Snake(GameObject):
             (head[0] + direction_x * GRID_SIZE) % SCREEN_WIDTH,
             (head[1] + direction_y * GRID_SIZE) % SCREEN_HEIGHT
         ]
-        self.positions.insert(0, [new_position[0], new_position[1]])
-        if self.length == len(self.positions) - 1:
+        self.positions.insert(0, new_position)
+        if len(self.positions) > self.length:
             self.last = self.positions.pop()
         else:
             self.last = None
@@ -164,8 +164,8 @@ def main():
             apple.randomize_position(snake.positions)
         if snake.get_head_position() in snake.positions[1:]:
             screen.fill(BOARD_BACKGROUND_COLOR)
-            apple.randomize_position(snake.positions)
             snake.reset()
+            apple.randomize_position(snake.positions)
         apple.draw()
         snake.draw()
 
